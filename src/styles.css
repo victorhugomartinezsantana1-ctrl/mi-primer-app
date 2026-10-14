@@ -1,21 +1,141 @@
+:root {
+  --bg-dark: #0d0d0d;
+  --bg-surface: #111111;
+  --text-primary: #e0e0e0;
+  --accent-blue: #00ffff;
+  --accent-orange: #ff4500;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+}
+
+/* Reset */
 * {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-html, body {
   margin: 0;
-  border: 0;
   padding: 0;
-  background-color: #fff;
+  box-sizing: border-box;
 }
 
+/* Body */
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.05) 0,
+      rgba(255,255,255,0.05) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0,
+      rgba(255,255,255,0.05) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+}
+
+/* Main container */
 main {
-  margin: auto;
-  width: 50%;
-  padding: 20px;
+  background: var(--bg-surface);
+  border: 2px solid var(--accent-blue);
+  border-radius: 8px;
+  padding: 2.5rem 3rem;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-main > h1 {
+/* Optional: subtle animated lines */
+main::before,
+main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,255,0.1) 2px,
+      rgba(0,255,255,0.1) 4px
+    );
+  pointer-events: none;
+  opacity: 0.5;
+  animation: moveLines 12s linear infinite;
+}
+
+main::after {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,69,0,0.1) 2px,
+      rgba(255,69,0,0.1) 4px
+    );
+  animation: moveLines 16s linear infinite reverse;
+}
+
+@keyframes moveLines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+/* Heading */
+h1 {
   text-align: center;
-  font-size: 3.5em;
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* fallback for non‑webkit */
+  color: var(--accent-blue);
+  text-shadow:
+    0 0 5px var(--accent-blue),
+    0 0 10px var(--accent-orange);
+  letter-spacing: 1px;
+  position: relative;
+}
+
+/* Optional: cursor‑like blinking effect for h1 */
+h1::after {
+  content: '|';
+  position: absolute;
+  right: -0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: blink 1s steps(2, start) infinite;
+  color: var(--accent-orange);
+  font-size: inherit;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  main {
+    padding: 1.5rem 2rem;
+  }
 }
